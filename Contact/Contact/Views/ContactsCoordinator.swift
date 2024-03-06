@@ -21,12 +21,14 @@ final class ContactsCoordinator<R: AppRouter> {
         ContactsCollectionViewController(viewModel: contactsViewModel)
     }()
     
+    // MARK: - Initializers
+    
     init(router: R) {
         self.router = router
     }
 }
 
-// MARK: - Coordinator
+// MARK: - Coordinator delegate
 
 extension ContactsCoordinator: Coordinator {
     func start() {

@@ -36,7 +36,7 @@
 		BD71EADA2B98C285008D787E /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		BD71EAE22B98C504008D787E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BD71EAE42B98C785008D787E /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		BD71EAE72B98C7ED008D787E /* ContactEntity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactEntity.xcdatamodel; sourceTree = "<group>"; };
+		BD71EAE72B98C7ED008D787E /* ContactEntity.xcdatamodel */ = {isa = PBXFileReference; explicitFileType = wrapper.xcdatamodel; path = ContactEntity.xcdatamodel; sourceTree = "<group>"; };
 		BD71EAEC2B98C896008D787E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		BD71EAF02B98C8EB008D787E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		BD71EAF22B98C959008D787E /* ContactsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCoordinator.swift; sourceTree = "<group>"; };
@@ -104,9 +104,9 @@
 		BD71EADF2B98C33E008D787E /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				BD71EAFC2B98D747008D787E /* CoreDataError.swift */,
 				BD71EAE02B98C4E1008D787E /* Entity */,
 				BD71EAE12B98C4EA008D787E /* Manager */,
-				BD71EAFC2B98D747008D787E /* CoreDataError.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";

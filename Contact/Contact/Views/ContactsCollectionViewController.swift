@@ -22,6 +22,13 @@ final class ContactsCollectionViewController: UICollectionViewController {
     private var subscriber: AnyCancellable?
     private let viewModel: ContactsViewModel
     
+    private lazy var addButton: UIBarButtonItem = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.addTarget(self, action: #selector(addButtonClicked), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
+    
     private lazy var dataSource: DataSource = {
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, Contact> { cell, _, contact in
             var configuration = cell.defaultContentConfiguration()
@@ -40,7 +47,7 @@ final class ContactsCollectionViewController: UICollectionViewController {
     
     init(viewModel: ContactsViewModel) {
         self.viewModel = viewModel
-        super.init(collectionViewLayout: Self.collectionViewLayout())
+        super.init(collectionViewLayout: UICollectionViewLayout())
     }
     
     required init?(coder: NSCoder) {
@@ -57,11 +64,11 @@ final class ContactsCollectionViewController: UICollectionViewController {
     
     // MARK: - Functions
     
-    static func collectionViewLayout() -> UICollectionViewLayout {
-        var config = UICollectionLayoutListConfiguration(appearance: .sidebar)
-        config.trailingSwipeActionsConfigurationProvider = { indexPath in
-            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
-                print("Deleting...")
+    private func collectionViewLayout() -> UICollectionViewLayout {
+        var listCellConfiguration = UICollectionLayoutListConfiguration(appearance: .sidebar)
+        listCellConfiguration.trailingSwipeActionsConfigurationProvider = { indexPath in
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { [unowned self] action, view, completion in
+                deleteContact(indexPath: indexPath)
             }
             
             deleteAction.image = UIImage(systemName: "trash.fill")
@@ -69,16 +76,18 @@ final class ContactsCollectionViewController: UICollectionViewController {
             return UISwipeActionsConfiguration(actions: [deleteAction])
         }
         
-        return UICollectionViewCompositionalLayout.list(using: config)
+        return UICollectionViewCompositionalLayout.list(using: listCellConfiguration)
     }
     
     private func setupUI() {
         title = "Contacts"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItems = [addButton]
+        collectionView.setCollectionViewLayout(collectionViewLayout(), animated: true)
     }
     
     private func bindUI() {
-        viewModel.loadData()
+        viewModel.fetchContacts()
         
         subscriber = viewModel.contactsSubject
             .sink { completion in
@@ -98,5 +107,21 @@ final class ContactsCollectionViewController: UICollectionViewController {
         snapshot.appendItems(contacts)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    private func deleteContact(indexPath: IndexPath) {
+        viewModel.deleteContact(index: indexPath.row)
+    }
+    
+    @objc
+    private func addButtonClicked() {
+        viewModel.addContact()
+    }
 }
 
+// MARK: - Collection View Delegate
+
+extension ContactsCollectionViewController {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}

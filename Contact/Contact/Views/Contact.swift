@@ -8,6 +8,8 @@
 import Foundation
 
 struct Contact: Hashable {
-    let id: UUID = .init()
+    static var identifier: String = ContactEntity.description()
+    
+    let id: UUID
     let name: String
 }

@@ -16,6 +16,8 @@ final class App: Coordinator {
     }
 }
 
+// MARK: - App Router delegate
+
 extension App: AppRouter {
     
     func process(route: AppTransition) {

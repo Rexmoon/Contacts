@@ -10,6 +10,8 @@ import Foundation
 enum CoreDataError: LocalizedError {
     case addingError
     case deletingError
+    case objectNotFound
+    case nilProperty
     case genericError(Error)
     
     var errorDescription: String? {
